@@ -14,7 +14,9 @@ if [[ -z "$GITLAB_SSH_KEY" ]]; then
   fi
   
   export GITLAB_SSH_KEY=$(curl -s -H "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/kv-gitlab/data/pl.rachuna-net/auth/gitlab | jq -r .data.data.GITLAB_SSH_KEY)
-  echo "🔑 Pobrano klucz SSH z Vaulta"
+  export SONAR_TOKEN=$(curl -s -H "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/kv-gitlab/data/pl.rachuna-net/auth/sonarcloud | jq -r .data.data.SONAR_TOKEN)
+  export SONAR_HOST_URL=$(curl -s -H "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/kv-gitlab/data/pl.rachuna-net/auth/sonarcloud | jq -r .data.data.SONAR_HOST_URL)
+  echo "🔑 Pobrano sekrety z Vaulta"
 fi
 
 mkdir -p /home/sonar/.ssh
