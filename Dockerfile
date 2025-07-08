@@ -38,11 +38,11 @@ RUN apt-get update && apt-get install -y \
     && chmod +x /opt/scripts/*.bash \
 
     # Create a non-root user and set permissions
-    && useradd -m -s /bin/bash sonar \
-    && chown -R sonar:sonar /opt/scripts \
-    && chown -R sonar:sonar /opt/sonar-scanner-7.0.2.4839-linux-x64
+    && useradd -m -s /bin/bash nonroot \
+    && chown -R nonroot:nonroot /opt/scripts \
+    && chown -R nonroot:nonroot /opt/sonar-scanner-7.0.2.4839-linux-x64
 
-USER sonar
+USER nonroot
 
 ENV JAVA_HOME=/usr/lib/jvm/java-1.17.0-openjdk-amd64
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
