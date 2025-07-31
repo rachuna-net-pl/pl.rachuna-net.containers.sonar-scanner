@@ -1,0 +1,56 @@
+---
+base_image: ubuntu:noble
+
+labels:
+  maintainer: "Maciej Rachuna <rachuna.maciej@gmail.com>"
+  version: "1.0.0"
+  image_source: "https://gitlab.com/pl.rachuna-net/containers/sonar-scanner"
+
+env:
+  DEBIAN_FRONTEND: noninteractive
+  TF_IN_AUTOMATION: "true"
+  LANG: C.UTF-8
+  JAVA_HOME: /usr/lib/jvm/java-1.17.0-openjdk-amd64
+  PATH: "${JAVA_HOME}/bin:${PATH}"
+
+before_build_commands:
+  ## sonar-scanner
+  - curl -sLo ./sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux-x64.zip
+  - unzip sonar-scanner.zip
+
+packages:
+  - ca-certificates
+  - openjdk-17-jre
+  - bash
+  - curl
+  - git
+  - gnupg2
+  - jq
+  - lsb-release
+  - openssh-client
+  - unzip
+  - wget
+
+custom_repos: []
+
+extra_commands:
+  - chmod 777 /opt/scripts
+  - chmod 777 /opt/scripts/*
+  - ln -s /opt/sonar-scanner-7.1.0.4889-linux-x64/bin/sonar-scanner /usr/local/bin/sonar-scanner
+  - sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /opt/sonar-scanner-7.1.0.4889-linux-x64/bin/sonar-scanner
+  - sonar-scanner --version
+
+copy:
+  - source: scripts/
+    destination: /opt/scripts/
+  - source: sonar-scanner-7.1.0.4889-linux-x64
+    destination: /opt/sonar-scanner-7.1.0.4889-linux-x64
+
+user:
+  name: nonroot
+  shell: /bin/bash
+  home: /home/nonroot
+  chown: /opt/scripts/
+
+entrypoint: "/opt/scripts/entrypoint.bash"
+cmd: "/bin/bash"
