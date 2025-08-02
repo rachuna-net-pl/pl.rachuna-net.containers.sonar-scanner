@@ -3,7 +3,6 @@ base_image: ubuntu:noble
 
 labels:
   maintainer: "Maciej Rachuna <rachuna.maciej@gmail.com>"
-  version: "1.0.0"
   image_source: "https://gitlab.com/pl.rachuna-net/containers/sonar-scanner"
 
 env:
