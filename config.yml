@@ -14,7 +14,7 @@ env:
 
 before_build_commands:
   ## sonar-scanner
-  - curl -sLo ./sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux-x64.zip
+  - curl -sLo ./sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.2.0.5079-linux-x64.zip
   - unzip sonar-scanner.zip
 
 packages:
@@ -35,15 +35,15 @@ custom_repos: []
 extra_commands:
   - chmod 777 /opt/scripts
   - chmod 777 /opt/scripts/*
-  - ln -s /opt/sonar-scanner-7.1.0.4889-linux-x64/bin/sonar-scanner /usr/local/bin/sonar-scanner
-  - sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /opt/sonar-scanner-7.1.0.4889-linux-x64/bin/sonar-scanner
+  - ln -s /opt/sonar-scanner-7.2.0.5079-linux-x64/bin/sonar-scanner /usr/local/bin/sonar-scanner
+  - sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /opt/sonar-scanner-7.2.0.5079-linux-x64/bin/sonar-scanner
   - sonar-scanner --version
 
 copy:
   - source: scripts/
     destination: /opt/scripts/
-  - source: sonar-scanner-7.1.0.4889-linux-x64
-    destination: /opt/sonar-scanner-7.1.0.4889-linux-x64
+  - source: sonar-scanner-7.2.0.5079-linux-x64
+    destination: /opt/sonar-scanner-7.2.0.5079-linux-x64
 
 user:
   name: nonroot
